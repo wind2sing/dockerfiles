@@ -1,0 +1,23 @@
+set -e
+
+main () {
+  if [ ! -d "/tiddlywiki/$TW_WIKINAME" ]; then
+    tiddlywiki "$TW_WIKINAME" --init server
+  fi
+  tiddlywiki --version
+  echo host="$TW_HOST" \
+    port="$TW_PORT" \
+    username="$TW_USERNAME" \
+    password="$TW_PASSWORD" \
+    readers="$TW_READERS" \
+    writers="$TW_WRITERS"
+  exec tiddlywiki "$TW_WIKINAME" --listen \
+    host="$TW_HOST" \
+    port="$TW_PORT" \
+    username="$TW_USERNAME" \
+    password="$TW_PASSWORD" \
+    readers="$TW_READERS" \
+    writers="$TW_WRITERS"
+}
+
+main "$@"
